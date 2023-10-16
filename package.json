@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/akashTharuka/cpd-monitor/issues"
   },
-  "homepage": "https://github.com/akashTharuka/cpd-monitor#readme"
+  "homepage": "https://github.com/akashTharuka/cpd-monitor#readme",
+  "dependencies": {
+    "react-router-dom": "^6.17.0"
+  }
 }
