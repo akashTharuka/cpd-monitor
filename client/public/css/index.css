@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+
+:root{
+    --neon-btn-one: #ffcc33;
+    --neon-btn-two: #2196f3;
+    --background-black: #000814;
+    --background-blue: #021222;
+    --modal-background: #424651;
+}
+
+*{
+    outline: none !important;
+    border: none;
+}
+
+body{
+    font-family: 'Poppins', sans-serif;
+    scrollbar-width: none;
+    /* -ms-overflow-style: none;
+    overflow-x: hidden; */
+}
+
+body::-webkit-scrollbar{
+    display: none;
+}
