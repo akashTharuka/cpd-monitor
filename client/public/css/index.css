@@ -23,3 +23,26 @@ body{
 body::-webkit-scrollbar{
     display: none;
 }
+
+.register.container-fluid{
+    width: 30rem;
+}
+
+.register .card{
+    top: 50%;
+    transform: translateY(25%);
+}
+
+.card-title{
+    letter-spacing: 0.8rem;
+}
+
+.offscreen {
+    position: absolute;
+    left: -9999px;
+}
+
+.errmsg{
+    color: crimson;
+}
+
