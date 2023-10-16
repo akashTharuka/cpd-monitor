@@ -24,11 +24,13 @@ body::-webkit-scrollbar{
     display: none;
 }
 
-.register.container-fluid{
+.register.container-fluid,
+.login.container-fluid{
     width: 30rem;
 }
 
-.register .card{
+.register .card,
+.login .card{
     top: 50%;
     transform: translateY(25%);
 }

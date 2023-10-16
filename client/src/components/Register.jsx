@@ -81,6 +81,7 @@ const Register = () => {
             setSuccess(true);
             // clear the input fields
         }catch (err){
+            // optional chaining to safely access nested properties of an object
             if (!err?.response) {
                 setErrMsg('No Server Response');
             }
