@@ -1,5 +1,6 @@
 import React from 'react';
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { HashLink } from 'react-router-hash-link';
 import axios from '../api/axios';
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
@@ -7,9 +8,6 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const REGISTER_URL = '/register';
 
 const Register = () => {
-
-    const userRef = useRef();
-    const errRef = useRef();
 
     const [user, setUser] = useState('');
     const [validName, setValidName] = useState(false);
@@ -25,10 +23,6 @@ const Register = () => {
 
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
-
-    useEffect(() => {
-        userRef.current.focus();
-    }, []);
 
     useEffect(() => {
         const result = USER_REGEX.test(user);
@@ -87,11 +81,11 @@ const Register = () => {
             }
             else if (err.response?.status === 409){
                 setErrMsg('Username Taken');
+                setUser('');
             }
             else{
                 setErrMsg('Registration Failed');
             }
-            errRef.current.focus();
         }
     }
 
@@ -99,15 +93,21 @@ const Register = () => {
         <>
             {success ? (
                 <section>
-                    <h1>Success!</h1>
-                    <p>
-                        <a href="#">Sign In</a>
-                    </p>
+                    <div className="container container-fluid col-4 text-center">
+                        <div className="success card bg-light mx-auto px-md-5 px-1 py-5">
+                            <div className="card-title display-6 text-uppercase text-center">
+                                Success!
+                            </div>
+                            <span className='card-body'>
+                                <HashLink to="/login">Sign In</HashLink>
+                            </span>
+                        </div>
+                    </div>
                 </section>
             ) : (
-                <div className='register container-fluid'>
+                <div className='register container-fluid col-4'>
                     <div className="card bg-light mx-auto px-md-5 px-1 py-5">
-                        <p ref={errRef} className={`mx-auto ${errMsg ? "errmsg" : "offscreen"}`} aria-live="assertive">{errMsg}</p>
+                        <p className={`mx-auto ${errMsg ? "errmsg" : "offscreen"}`}>{errMsg}</p>
                         <div className="card-title display-6 text-uppercase text-center">
                             Register
                         </div>
@@ -118,12 +118,10 @@ const Register = () => {
                                     type="text"
                                     className={`form-control ${!user ? "" : validName ? "is-valid" : "is-invalid"}`}
                                     id="username"
-                                    ref={userRef}
                                     autoComplete='off'
                                     onChange={e => setUser(e.target.value)}
+                                    value={user}
                                     required
-                                    aria-invalid={validName ? "false" : "true"}
-                                    aria-describedby='uidnote'
                                     onFocus={() => setUserFocus(true)}
                                     onBlur={() => setUserFocus(false)} 
                                 />
@@ -140,8 +138,6 @@ const Register = () => {
                                     id="password"
                                     onChange={e => setPwd(e.target.value)}
                                     required
-                                    aria-invalid={validPwd ? "false" : "true"}
-                                    aria-describedby='pwdnote'
                                     onFocus={() => setPwdFocus(true)}
                                     onBlur={() => setPwdFocus(false)}
                                 />
@@ -158,8 +154,6 @@ const Register = () => {
                                     id="matchPwd"
                                     onChange={e => setMatchPwd(e.target.value)}
                                     required
-                                    aria-invalid={validPwd ? "false" : "true"}
-                                    aria-describedby='matchPwdNote'
                                     onFocus={() => setMatchPwdFocus(true)}
                                     onBlur={() => setMatchPwdFocus(false)}
                                 />
@@ -171,9 +165,8 @@ const Register = () => {
                             </form>
                             <p className='mt-4'>
                                 Already Registered? <br />
-                                <span className='line'>
-                                    {/* put router link here */}
-                                    <a className='text-decoration-none' href="#">Sign In</a>
+                                <span>
+                                    <HashLink className='text-decoration-none' to="/login">Sign In</HashLink>
                                 </span>
                             </p>
                         </div>

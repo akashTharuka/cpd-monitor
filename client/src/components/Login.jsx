@@ -1,23 +1,18 @@
 import React from 'react';
-import { useRef, useState, useEffect, useContext } from 'react';
-import AuthContext from '../context/AuthProvider';
+import { useState, useEffect } from 'react';
+import { HashLink } from 'react-router-hash-link';
+import useAuth from '../hooks/useAuth';
 
 import axios from '../api/axios';
 const LOGIN_URL = '/auth';
 
 const Login = () => {
-    const { setAuth } = useContext(AuthContext);
-    const userRef = useRef();
-    const errRef = useRef();
+    const { setAuth } = useAuth();
 
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
-
-    useEffect(() => {
-        userRef.current.focus();
-    }, []);
 
     useEffect(() => {
         setErrMsg('');
@@ -62,7 +57,6 @@ const Login = () => {
             else{
                 setErrMsg('Login Failed');
             }
-            errRef.current.focus();
         }
     }
 
@@ -71,15 +65,21 @@ const Login = () => {
             {
                 success ? (
                     <section>
-                        <h1>Success!</h1>
-                        <p>
-                            <a href="#">Sign Up</a>
-                        </p>
+                        <div className="container container-fluid col-4 text-center">
+                            <div className="success card bg-light mx-auto px-md-5 px-1 py-5">
+                                <div className="card-title display-6 text-uppercase text-center">
+                                    Success!
+                                </div>
+                                <span className='card-body'>
+                                    <HashLink to="/">Sign Up</HashLink>
+                                </span>
+                            </div>
+                        </div>
                     </section>
                 ) : (
-                    <div className='login container-fluid'>
+                    <div className='login container-fluid col-4'>
                         <div className="card bg-light mx-auto px-md-5 px-1 py-5">
-                            <p ref={errRef} className={`mx-auto ${errMsg ? "errmsg" : "offscreen"}`} aria-live="assertive">{errMsg}</p>
+                            <p className={`mx-auto ${errMsg ? "errmsg" : "offscreen"}`}>{errMsg}</p>
                             <div className="card-title display-6 text-uppercase text-center">
                                 Login
                             </div>
@@ -90,7 +90,6 @@ const Login = () => {
                                         type="text"
                                         className='form-control'
                                         id="username"
-                                        ref={userRef}
                                         autoComplete='off'
                                         onChange={e => setUser(e.target.value)}
                                         value={user}
@@ -111,9 +110,8 @@ const Login = () => {
                                 </form>
                                 <p className='mt-4'>
                                     Need an Account? <br />
-                                    <span className='line'>
-                                        {/* put router link here */}
-                                        <a className='text-decoration-none' href="#">Sign Up</a>
+                                    <span>
+                                        <HashLink className='text-decoration-none' to="/">Sign Up</HashLink>
                                     </span>
                                 </p>
                             </div>
